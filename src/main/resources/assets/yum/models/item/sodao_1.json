@@ -1,0 +1,7 @@
+{
+  "parent": "yum:item/mineral_wateropen",
+  "textures": {
+    "0": "yum:block/mineral_wateropen",
+    "particle": "yum:item/yum"
+  }
+}

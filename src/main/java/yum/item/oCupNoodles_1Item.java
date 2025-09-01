@@ -1,0 +1,107 @@
+package yum.item;
+
+import yum.procedures.EffectConfig;
+
+import net.minecraft.world.level.Level;
+import net.minecraft.world.item.Rarity;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.food.FoodProperties;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.Component;
+
+import java.util.List;
+
+public class oCupNoodles_1Item extends Item {
+	// 常量定义
+	private static final String BITES_TAG = "bites";
+	private static final int MAX_USES = 4;
+	
+	public oCupNoodles_1Item() {
+		super(new Item.Properties().stacksTo(64).rarity(Rarity.COMMON).food((new FoodProperties.Builder()).nutrition(4).saturationMod(0.3f).alwaysEat().build()));
+	}
+
+	@Override
+	public InteractionResultHolder<ItemStack> use(Level world, Player entity, InteractionHand hand) {
+		ItemStack itemstack = entity.getItemInHand(hand);
+		if (entity.canEat(itemstack.getFoodProperties(entity).canAlwaysEat())) {
+			entity.startUsingItem(hand);
+			return InteractionResultHolder.consume(itemstack);
+		} else {
+			return InteractionResultHolder.fail(itemstack);
+		}
+	}
+
+	@Override
+	public ItemStack finishUsingItem(ItemStack itemstack, Level world, LivingEntity entity) {
+		// 保存当前NBT数据
+		CompoundTag originalNbt = itemstack.getOrCreateTag().copy();
+		int currentBites = originalNbt.getInt(BITES_TAG);
+
+		// 获取食物属性并增加饱食度
+		FoodProperties foodProperties = itemstack.getFoodProperties(entity);
+		if (foodProperties != null && entity instanceof Player) {
+			Player player = (Player) entity;
+			player.getFoodData().eat(foodProperties.getNutrition(), foodProperties.getSaturationModifier());
+		}
+
+		// 更新使用次数
+		int newBites = currentBites + 1;
+		CompoundTag newNbt = itemstack.getOrCreateTag();
+		newNbt.putInt(BITES_TAG, newBites);
+		itemstack.setTag(newNbt);
+
+		// 使用达到最大次数后消耗物品
+		if (newBites >= MAX_USES) {
+			itemstack.shrink(1);
+		}
+
+		// 触发效果
+		EffectConfig.execute(world, entity, this);
+
+		return itemstack;
+	}
+
+	@Override
+	public boolean isRepairable(ItemStack itemstack) {
+		return false;
+	}
+
+	@Override
+	public boolean isEnchantable(ItemStack itemstack) {
+		return false;
+	}
+
+	@Override
+	public boolean isBarVisible(ItemStack stack) {
+		return false;
+	}
+
+	@Override
+	public int getBarColor(ItemStack stack) {
+		return super.getBarColor(stack);
+	}
+
+	@Override
+	public void appendHoverText(ItemStack stack, Level world, List<Component> tooltip, net.minecraft.world.item.TooltipFlag flag) {
+		super.appendHoverText(stack, world, tooltip, flag);
+		
+		if (stack.hasTag() && stack.getTag().contains(BITES_TAG)) {
+			int bites = stack.getTag().getInt(BITES_TAG);
+			int remainingUses = MAX_USES - bites;
+			
+			tooltip.add(Component.literal("食用次数: " + bites).withStyle(ChatFormatting.GRAY));
+			
+			if (remainingUses > 0) {
+				tooltip.add(Component.literal("剩余: " + remainingUses + "/" + MAX_USES).withStyle(ChatFormatting.BLUE));
+			} else {
+				tooltip.add(Component.literal("已用完").withStyle(ChatFormatting.RED));
+			}
+		}
+	}
+}

@@ -1,7 +1,0 @@
-{
-  "parent": "yum:item/bubble_tea",
-  "textures": {
-    "1": "yum:block/bubbletea5",
-    "particle": "yum:item/yum"
-  }
-}

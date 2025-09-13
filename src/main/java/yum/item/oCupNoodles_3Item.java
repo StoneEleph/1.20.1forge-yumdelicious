@@ -1,6 +1,7 @@
 package yum.item;
 
 import yum.procedures.EffectConfig;
+import yum.item.BiteCounter;
 
 import net.minecraft.world.level.Level;
 import net.minecraft.world.item.Rarity;
@@ -18,9 +19,8 @@ import net.minecraft.network.chat.Component;
 import java.util.List;
 
 public class oCupNoodles_3Item extends Item {
-	// 常量定义
-	private static final String BITES_TAG = "bites";
-	private static final int MAX_USES = 4;
+	// 使用BiteCounter管理食用次数
+	private static final BiteCounter biteCounter = new BiteCounter("bites", 4);
 	
 	public oCupNoodles_3Item() {
 		super(new Item.Properties().stacksTo(64).rarity(Rarity.COMMON).food((new FoodProperties.Builder()).nutrition(4).saturationMod(0.3f).alwaysEat().build()));
@@ -39,9 +39,8 @@ public class oCupNoodles_3Item extends Item {
 
 	@Override
 	public ItemStack finishUsingItem(ItemStack itemstack, Level world, LivingEntity entity) {
-		// 保存当前NBT数据
-		CompoundTag originalNbt = itemstack.getOrCreateTag().copy();
-		int currentBites = originalNbt.getInt(BITES_TAG);
+		// 使用BiteCounter增加使用次数
+		int newBites = biteCounter.incrementBites(itemstack);
 
 		// 获取食物属性并增加饱食度
 		FoodProperties foodProperties = itemstack.getFoodProperties(entity);
@@ -50,14 +49,8 @@ public class oCupNoodles_3Item extends Item {
 			player.getFoodData().eat(foodProperties.getNutrition(), foodProperties.getSaturationModifier());
 		}
 
-		// 更新使用次数
-		int newBites = currentBites + 1;
-		CompoundTag newNbt = itemstack.getOrCreateTag();
-		newNbt.putInt(BITES_TAG, newBites);
-		itemstack.setTag(newNbt);
-
 		// 使用达到最大次数后消耗物品
-		if (newBites >= MAX_USES) {
+		if (biteCounter.isMaxUsesReached(itemstack)) {
 			itemstack.shrink(1);
 		}
 
@@ -91,17 +84,7 @@ public class oCupNoodles_3Item extends Item {
 	public void appendHoverText(ItemStack stack, Level world, List<Component> tooltip, net.minecraft.world.item.TooltipFlag flag) {
 		super.appendHoverText(stack, world, tooltip, flag);
 		
-		if (stack.hasTag() && stack.getTag().contains(BITES_TAG)) {
-			int bites = stack.getTag().getInt(BITES_TAG);
-			int remainingUses = MAX_USES - bites;
-			
-			tooltip.add(Component.literal("食用次数: " + bites).withStyle(ChatFormatting.GRAY));
-			
-			if (remainingUses > 0) {
-				tooltip.add(Component.literal("剩余: " + remainingUses + "/" + MAX_USES).withStyle(ChatFormatting.BLUE));
-			} else {
-				tooltip.add(Component.literal("已用完").withStyle(ChatFormatting.RED));
-			}
-		}
+		// 使用BiteCounter添加提示文本
+		biteCounter.appendBiteTooltip(stack, tooltip, "食用次数", 4);
 	}
 }

@@ -14,7 +14,7 @@ import net.minecraft.world.InteractionHand;
 
 public class ChinesespicysnackfoodItem extends Item {
 	public ChinesespicysnackfoodItem() {
-		super(new Item.Properties().stacksTo(64).rarity(Rarity.COMMON));
+		super(new Item.Properties().stacksTo(1).rarity(Rarity.COMMON));
 	}
 
 	@Override

@@ -2,6 +2,7 @@
 package yum.item;
 
 import yum.procedures.EffectConfig;
+import yum.item.BiteCounter;
 
 import net.minecraft.world.level.Level;
 import net.minecraft.world.item.UseAnim;
@@ -20,9 +21,8 @@ import net.minecraft.network.chat.Component;
 import java.util.List;
 
 public class GrapesodaoItem extends Item {
-	// 常量定义
-	private static final String DRINKS_TAG = "drinks";
-	private static final int MAX_USES = 3;
+	// 使用BiteCounter管理饮用次数
+	private static final BiteCounter biteCounter = new BiteCounter("drinks", 3);
 	
 	public GrapesodaoItem() {
 		super(new Item.Properties().stacksTo(1).rarity(Rarity.COMMON).food((new FoodProperties.Builder()).nutrition(0).saturationMod(0f).alwaysEat().build()));
@@ -46,9 +46,8 @@ public class GrapesodaoItem extends Item {
 
 	@Override
 	public ItemStack finishUsingItem(ItemStack itemstack, Level world, LivingEntity entity) {
-		// 保存当前NBT数据
-		CompoundTag originalNbt = itemstack.getOrCreateTag().copy();
-		int currentDrinks = originalNbt.getInt(DRINKS_TAG);
+		// 使用BiteCounter增加使用次数
+		int newDrinks = biteCounter.incrementBites(itemstack);
 
 		// 获取食物属性并增加饱食度
 		FoodProperties foodProperties = itemstack.getFoodProperties(entity);
@@ -57,14 +56,8 @@ public class GrapesodaoItem extends Item {
 			player.getFoodData().eat(foodProperties.getNutrition(), foodProperties.getSaturationModifier());
 		}
 
-		// 更新使用次数
-		int newDrinks = currentDrinks + 1;
-		CompoundTag newNbt = itemstack.getOrCreateTag();
-		newNbt.putInt(DRINKS_TAG, newDrinks);
-		itemstack.setTag(newNbt);
-
 		// 使用达到最大次数后消耗物品
-		if (newDrinks >= MAX_USES) {
+		if (biteCounter.isMaxUsesReached(itemstack)) {
 			itemstack.shrink(1);
 		}
 
@@ -98,17 +91,7 @@ public class GrapesodaoItem extends Item {
 	public void appendHoverText(ItemStack stack, Level world, List<Component> tooltip, net.minecraft.world.item.TooltipFlag flag) {
 		super.appendHoverText(stack, world, tooltip, flag);
 		
-		if (stack.hasTag() && stack.getTag().contains(DRINKS_TAG)) {
-			int drinks = stack.getTag().getInt(DRINKS_TAG);
-			int remainingUses = MAX_USES - drinks;
-			
-			tooltip.add(Component.literal("饮用次数: " + drinks).withStyle(ChatFormatting.GRAY));
-			
-			if (remainingUses > 0) {
-				tooltip.add(Component.literal("剩余: " + remainingUses + "/" + MAX_USES).withStyle(ChatFormatting.BLUE));
-			} else {
-				tooltip.add(Component.literal("已用完").withStyle(ChatFormatting.RED));
-			}
-		}
+		// 使用BiteCounter添加提示文本
+		biteCounter.appendBiteTooltip(stack, tooltip, "饮用次数", 3);
 	}
 }

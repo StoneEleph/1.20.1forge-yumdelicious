@@ -17,7 +17,7 @@ import net.minecraft.core.registries.Registries;
 public class YumModTabs {
 	public static final DeferredRegister<CreativeModeTab> REGISTRY = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, YumMod.MODID);
 	public static final RegistryObject<CreativeModeTab> YUM = REGISTRY.register("yum",
-			() -> CreativeModeTab.builder().title(Component.translatable("item_group.yum.yum")).icon(() -> new ItemStack(YumModItems.YUMYUM.get())).displayItems((parameters, tabData) -> {
+			() -> CreativeModeTab.builder().title(Component.translatable("item_group.yum.yum")).icon(() -> new ItemStack(YumModItems.CHIPS_1.get())).displayItems((parameters, tabData) -> {
 				tabData.accept(YumModItems.CHIPS_1.get());
 				tabData.accept(YumModItems.CHIPS_2.get());
 				tabData.accept(YumModItems.CHIPS_3.get());

@@ -8,23 +8,23 @@ public class ConfigEntry {
     }
     
     public String getEnabledKey() {
-        return configPrefix + "_enabled";
+        return configPrefix + "enabled";
     }
     
     public String getEffectKey() {
-        return configPrefix + "_effect";
+        return configPrefix + "effect";
     }
     
     public String getDurationKey() {
-        return configPrefix + "_duration";
+        return configPrefix + "duration";
     }
     
     public String getAmplifierKey() {
-        return configPrefix + "_amplifier";
+        return configPrefix + "amplifier";
     }
     
     public String getMultiEffectsKey() {
-        return configPrefix + "_multi_effects";
+        return configPrefix + "multi_effects";
     }
     
     public String getConfigKey() {

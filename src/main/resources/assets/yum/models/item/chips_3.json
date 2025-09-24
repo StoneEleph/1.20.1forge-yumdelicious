@@ -1,0 +1,7 @@
+{
+  "parent": "yum:item/chips",
+  "textures": {
+    "1": "yum:block/chips3",
+    "particle": "yum:item/yum"
+  }
+}

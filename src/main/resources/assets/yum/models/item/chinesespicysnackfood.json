@@ -1,7 +1,0 @@
-{
-  "parent": "yum:item/chinese_spicy_snack_food",
-  "textures": {
-    "0": "yum:block/latiao",
-    "particle": "yum:item/yum"
-  }
-}

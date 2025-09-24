@@ -1,7 +1,0 @@
-{
-  "parent": "yum:item/mineral_water",
-  "textures": {
-    "0": "yum:block/lime_flavored_soda",
-    "particle": "yum:item/yum"
-  }
-}

@@ -1,7 +1,0 @@
-{
-  "parent": "yum:item/ocupnoodles",
-  "textures": {
-    "2": "yum:block/ocupnoodles2",
-    "particle": "yum:item/yum"
-  }
-}

@@ -1,4 +1,3 @@
-
 package yum.item;
 
 import yum.procedures.ChipsProcedure;
@@ -12,14 +11,14 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.InteractionHand;
 
-public class PeachsodaItem extends Item {
-	public PeachsodaItem() {
+public class CannedCola_1Item extends Item {
+	public CannedCola_1Item() {
 		super(new Item.Properties().stacksTo(1).rarity(Rarity.COMMON));
 	}
 
 	@Override
 	public UseAnim getUseAnimation(ItemStack itemstack) {
-		return UseAnim.DRINK;
+		return UseAnim.EAT;
 	}
 
 	@Override

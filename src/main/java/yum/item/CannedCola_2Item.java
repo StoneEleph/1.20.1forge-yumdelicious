@@ -1,4 +1,3 @@
-
 package yum.item;
 
 import yum.procedures.ChipsProcedure;
@@ -12,8 +11,8 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.InteractionHand;
 
-public class ChinesespicysnackfoodItem extends Item {
-	public ChinesespicysnackfoodItem() {
+public class CannedCola_2Item extends Item {
+	public CannedCola_2Item() {
 		super(new Item.Properties().stacksTo(1).rarity(Rarity.COMMON));
 	}
 
@@ -30,10 +29,7 @@ public class ChinesespicysnackfoodItem extends Item {
 	@Override
 	public InteractionResultHolder<ItemStack> use(Level world, Player entity, InteractionHand hand) {
 		InteractionResultHolder<ItemStack> ar = super.use(world, entity, hand);
-		ItemStack itemstack = ar.getObject();
-		if (!world.isClientSide()) {
-			ChipsProcedure.execute(world, entity);
-		}
+		ChipsProcedure.execute(world, entity);
 		return ar;
 	}
 }

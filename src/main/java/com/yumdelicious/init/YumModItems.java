@@ -57,6 +57,10 @@ import yum.item.oCupNoodles_1Item;
 import yum.item.oCupNoodles_2Item;
 import yum.item.oCupNoodles_3Item;
 import yum.item.oCupNoodles_4Item;
+import yum.item.CannedCola_1Item;
+import yum.item.CannedColao_1Item;
+import yum.item.CannedCola_2Item;
+import yum.item.CannedColao_2Item;
 
 import yum.YumMod;
 
@@ -135,5 +139,10 @@ public class YumModItems {
 	public static final RegistryObject<Item> O_CUP_NOODLES_2 = REGISTRY.register("o_cup_noodles_2", () -> new oCupNoodles_2Item());
 	public static final RegistryObject<Item> O_CUP_NOODLES_3 = REGISTRY.register("o_cup_noodles_3", () -> new oCupNoodles_3Item());
 	public static final RegistryObject<Item> O_CUP_NOODLES_4 = REGISTRY.register("o_cup_noodles_4", () -> new oCupNoodles_4Item());
+	// 罐装可乐
+	public static final RegistryObject<Item> CANNED_COLA_1 = REGISTRY.register("canned_cola_1", () -> new CannedCola_1Item());
+	public static final RegistryObject<Item> CANNED_COLA_2 = REGISTRY.register("canned_cola_2", () -> new CannedCola_2Item());
+	public static final RegistryObject<Item> CANNED_COLAO_2 = REGISTRY.register("canned_colao_2", () -> new CannedColao_2Item());
+	public static final RegistryObject<Item> CANNED_COLAO_1 = REGISTRY.register("canned_colao_1", () -> new CannedColao_1Item());
 }
 

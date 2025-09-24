@@ -96,6 +96,16 @@ public class YumitemeffectstomlConfiguration {
 	public static final ForgeConfigSpec.ConfigValue<Boolean> ocupnoodles_4_enabled;
 	public static final ForgeConfigSpec.ConfigValue<String> ocupnoodles_4_multi_effects;
 	
+	// 罐装可乐效果配置
+	public static final ForgeConfigSpec.ConfigValue<Boolean> canned_cola_1_enabled;
+	public static final ForgeConfigSpec.ConfigValue<String> canned_cola_1_multi_effects;
+	public static final ForgeConfigSpec.ConfigValue<Boolean> canned_colao_1_enabled;
+	public static final ForgeConfigSpec.ConfigValue<String> canned_colao_1_multi_effects;
+	public static final ForgeConfigSpec.ConfigValue<Boolean> canned_cola_2_enabled;
+	public static final ForgeConfigSpec.ConfigValue<String> canned_cola_2_multi_effects;
+	public static final ForgeConfigSpec.ConfigValue<Boolean> canned_colao_2_enabled;
+	public static final ForgeConfigSpec.ConfigValue<String> canned_colao_2_multi_effects;
+	
 	static {
 		BUILDER.push("配置说明：");
 		BUILDER.comment("每个配置分类包含enabled(启用) | effect(效果) | duration(持续时间) | amplifier(强度) | multi_effects(多重效果)");
@@ -197,6 +207,17 @@ public class YumitemeffectstomlConfiguration {
 		ocupnoodles_3_multi_effects = BUILDER.define("ocupnoodles_3_multi_effects", "[]");
 		ocupnoodles_4_enabled = BUILDER.define("ocupnoodles_4_enabled", true);
 		ocupnoodles_4_multi_effects = BUILDER.define("ocupnoodles_4_multi_effects", "[]");
+		BUILDER.pop();
+		
+		BUILDER.push("罐装可乐效果配置");
+		canned_cola_1_enabled = BUILDER.define("canned_cola_1_enabled", true);
+		canned_cola_1_multi_effects = BUILDER.define("canned_cola_1_multi_effects", "[{\"effect\":\"minecraft:speed\",\"duration\":30,\"amplifier\":0}]");
+		canned_colao_1_enabled = BUILDER.define("canned_colao_1_enabled", true);
+		canned_colao_1_multi_effects = BUILDER.define("canned_colao_1_multi_effects", "[{\"effect\":\"minecraft:speed\",\"duration\":30,\"amplifier\":0}]");
+		canned_cola_2_enabled = BUILDER.define("canned_cola_2_enabled", true);
+		canned_cola_2_multi_effects = BUILDER.define("canned_cola_2_multi_effects", "[{\"effect\":\"minecraft:speed\",\"duration\":30,\"amplifier\":0}]");
+		canned_colao_2_enabled = BUILDER.define("canned_colao_2_enabled", true);
+		canned_colao_2_multi_effects = BUILDER.define("canned_colao_2_multi_effects", "[{\"effect\":\"minecraft:speed\",\"duration\":30,\"amplifier\":0}]");
 		BUILDER.pop();
 
 		SPEC = BUILDER.build();

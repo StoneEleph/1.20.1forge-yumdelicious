@@ -102,7 +102,15 @@ public class ChipsProcedure {
         CHIPS_MAP.put(cupnoodles2, ocupnoodles2);
         CHIPS_MAP.put(cupnoodles3, ocupnoodles3);
         CHIPS_MAP.put(cupnoodles4, ocupnoodles4);
-	}
+        
+        // 罐装可乐
+        Item cannedCola1 = YumModItems.CANNED_COLA_1.get();
+        Item cannedColao1 = YumModItems.CANNED_COLAO_1.get();
+        Item cannedCola2 = YumModItems.CANNED_COLA_2.get();
+        Item cannedColao2 = YumModItems.CANNED_COLAO_2.get();
+        
+        CHIPS_MAP.put(cannedCola1, cannedColao1);
+        CHIPS_MAP.put(cannedCola2, cannedColao2);	}
 
 	// 提供动态注册方法，添加null检查
     public static void registerConversion(Item input, Item output) {

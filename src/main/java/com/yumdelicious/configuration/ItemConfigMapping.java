@@ -53,6 +53,11 @@ public class ItemConfigMapping {
         register(YumModItems.O_CUP_NOODLES_2.get(), new ConfigEntry("ocupnoodles_2"));
         register(YumModItems.O_CUP_NOODLES_3.get(), new ConfigEntry("ocupnoodles_3"));
         register(YumModItems.O_CUP_NOODLES_4.get(), new ConfigEntry("ocupnoodles_4"));
+        // 罐装可乐效果配置映射
+        register(YumModItems.CANNED_COLA_1.get(), new ConfigEntry("canned_cola_1"));
+        register(YumModItems.CANNED_COLAO_1.get(), new ConfigEntry("canned_colao_1"));
+        register(YumModItems.CANNED_COLA_2.get(), new ConfigEntry("canned_cola_2"));
+        register(YumModItems.CANNED_COLAO_2.get(), new ConfigEntry("canned_colao_2"));
     }
     
     public static void register(Item item, ConfigEntry config) {

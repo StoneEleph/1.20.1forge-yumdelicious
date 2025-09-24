@@ -1,6 +1,7 @@
 package yum.item;
 
 import yum.procedures.EffectConfig;
+import yum.item.BiteCounter;
 
 import net.minecraft.world.level.Level;
 import net.minecraft.world.item.Rarity;
@@ -18,12 +19,11 @@ import net.minecraft.network.chat.Component;
 import java.util.List;
 
 public class ChinesespicysnackfoodoItem extends Item {
-	// 常量定义
-	private static final String BITES_TAG = "bites";
-	private static final int MAX_USES = 3;
+	// 使用BiteCounter管理食用次数
+	private final BiteCounter biteCounter = new BiteCounter("bites", 3);
 	
 	public ChinesespicysnackfoodoItem() {
-		super(new Item.Properties().stacksTo(64).rarity(Rarity.COMMON).food((new FoodProperties.Builder()).nutrition(2).saturationMod(0.1f).alwaysEat().build()));
+		super(new Item.Properties().stacksTo(1).rarity(Rarity.COMMON).food((new FoodProperties.Builder()).nutrition(2).saturationMod(0.1f).alwaysEat().build()));
 	}
 
 	@Override
@@ -39,10 +39,6 @@ public class ChinesespicysnackfoodoItem extends Item {
 
 	@Override
 	public ItemStack finishUsingItem(ItemStack itemstack, Level world, LivingEntity entity) {
-		// 保存当前NBT数据
-		CompoundTag originalNbt = itemstack.getOrCreateTag().copy();
-		int currentBites = originalNbt.getInt(BITES_TAG);
-
 		// 获取食物属性并增加饱食度
 		FoodProperties foodProperties = itemstack.getFoodProperties(entity);
 		if (foodProperties != null && entity instanceof Player) {
@@ -51,13 +47,10 @@ public class ChinesespicysnackfoodoItem extends Item {
 		}
 
 		// 更新使用次数
-		int newBites = currentBites + 1;
-		CompoundTag newNbt = itemstack.getOrCreateTag();
-		newNbt.putInt(BITES_TAG, newBites);
-		itemstack.setTag(newNbt);
+		biteCounter.incrementBites(itemstack);
 
 		// 使用达到最大次数后消耗物品
-		if (newBites >= MAX_USES) {
+		if (biteCounter.isMaxUsesReached(itemstack)) {
 			itemstack.shrink(1);
 		}
 
@@ -90,18 +83,6 @@ public class ChinesespicysnackfoodoItem extends Item {
 	@Override
 	public void appendHoverText(ItemStack stack, Level world, List<Component> tooltip, net.minecraft.world.item.TooltipFlag flag) {
 		super.appendHoverText(stack, world, tooltip, flag);
-		
-		if (stack.hasTag() && stack.getTag().contains(BITES_TAG)) {
-			int bites = stack.getTag().getInt(BITES_TAG);
-			int remainingUses = MAX_USES - bites;
-			
-			tooltip.add(Component.literal("食用次数: " + bites).withStyle(ChatFormatting.GRAY));
-			
-			if (remainingUses > 0) {
-				tooltip.add(Component.literal("剩余: " + remainingUses + "/" + MAX_USES).withStyle(ChatFormatting.BLUE));
-			} else {
-				tooltip.add(Component.literal("已用完").withStyle(ChatFormatting.RED));
-			}
-		}
+		biteCounter.appendBiteTooltip(stack, tooltip, "食用次数", 3);
 	}
 }

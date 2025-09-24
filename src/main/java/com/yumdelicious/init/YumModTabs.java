@@ -5,6 +5,7 @@
 package yum.init;
 
 import yum.YumMod;
+import yum.init.YumModItems;
 
 import net.minecraftforge.registries.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
@@ -17,7 +18,7 @@ import net.minecraft.core.registries.Registries;
 public class YumModTabs {
 	public static final DeferredRegister<CreativeModeTab> REGISTRY = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, YumMod.MODID);
 	public static final RegistryObject<CreativeModeTab> YUM = REGISTRY.register("yum",
-			() -> CreativeModeTab.builder().title(Component.translatable("item_group.yum.yum")).icon(() -> new ItemStack(YumModItems.YUMYUM.get())).displayItems((parameters, tabData) -> {
+			() -> CreativeModeTab.builder().title(Component.translatable("item_group.yum.yum")).icon(() -> new ItemStack(YumModItems.CHIPS_1.get())).displayItems((parameters, tabData) -> {
 				tabData.accept(YumModItems.CHIPS_1.get());
 				tabData.accept(YumModItems.CHIPS_2.get());
 				tabData.accept(YumModItems.CHIPS_3.get());
@@ -52,6 +53,8 @@ public class YumModTabs {
 				tabData.accept(YumModItems.CUP_NOODLES_2.get());
 				tabData.accept(YumModItems.CUP_NOODLES_3.get());
 				tabData.accept(YumModItems.CUP_NOODLES_4.get());
+				tabData.accept(YumModItems.CANNED_COLA_1.get());
+				tabData.accept(YumModItems.CANNED_COLA_2.get());
 			})
 
 			.build());
